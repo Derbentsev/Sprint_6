@@ -1,10 +1,7 @@
 import pytest
 
-from selenium import webdriver
-
 from pages.home_page import HomePage
 from data.test_data import DataTest
-from locators.home_page_locators import HomePageLocators
 
 
 class TestQuestions:

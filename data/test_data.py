@@ -17,3 +17,16 @@ class DataTest:
         8 : 
             'Да, обязательно. Всем самокатов! И Москве, и Московской области.',
     }
+
+
+    order_data = {
+        'first_name' : 'Антон',
+        'last_name' : 'Иванов',
+        'address' :  'Санкт-Петербург',
+        'metro_station' : 'Черкизовская',
+        'telephone' :  '89213376585',
+        'date' : '27.06.2025',
+        'rental_period' : 'сутки',
+        'scooter_color' : 'black',
+        'comment' : 'Test комментарий'
+    }
