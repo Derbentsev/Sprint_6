@@ -1,19 +1,21 @@
+import pytest
+
+from locators.home_page_locators import HomePageLocators
+
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from locators.home_page_locators import HomePageLocators
-
 
 class HomePage:
-    def __init__(self, web_driver):
+    def __init__(self, web_driver: webdriver.Remote):
         self.driver = web_driver
         self.driver.get('https://qa-scooter.praktikum-services.ru/')
+        self.driver.maximize_window()
 
-
-    def wait_home_page_load(self):
-        WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(HomePageLocators.main_page_text)
+    def home_page_load(self):
+        WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located(HomePageLocators.faq_section)
         )
 
 
@@ -36,9 +38,11 @@ class HomePage:
 
 
     def click_on_order_header_button(self):
-        self.driver.find_element(*HomePageLocators.order_header_button).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(HomePageLocators.order_header_button)
+        ).click()
 
-    
+
     def click_on_order_button(self):
         self.driver.find_element(*HomePageLocators.order_button).click()
 
@@ -55,7 +59,3 @@ class HomePage:
         WebDriverWait(self.driver, 15).until(
             EC.visibility_of_element_located(HomePageLocators.dzen_logo)
         )
-
-
-    def __del__(self):
-        self.driver.quit()

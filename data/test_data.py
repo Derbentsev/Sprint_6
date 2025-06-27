@@ -27,6 +27,6 @@ class DataTest:
         'telephone' :  '89213376585',
         'date' : '27.06.2025',
         'rental_period' : 'сутки',
-        'scooter_color' : 'black',
+        'scooter_color' : 'чёрный жемчуг',
         'comment' : 'Test комментарий'
     }
