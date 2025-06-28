@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 
 class OrderPage():
     def __init__(self, web_driver: webdriver.Remote):
-        self.driver = web_driver
+        self.driver = web_driver        
 
 
     def wait_order_page_load(self):
@@ -31,7 +31,6 @@ class OrderPage():
 
     def fill_metro_station(self, metro_station):
         self.driver.find_element(*OrderPageLocators.input_metro_station).send_keys(metro_station)
-        locator = OrderPageLocators.get_metro_station_item_locator(metro_station)
         self.driver.find_element(*OrderPageLocators.get_metro_station_item_locator(metro_station)).click()
 
 
@@ -77,6 +76,6 @@ class OrderPage():
 
 
     def wait_order_ready(self):
-        WebDriverWait(self.driver, 5).until(
+        return WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(OrderPageLocators.order_success_text)
-        )
+        ).is_displayed()

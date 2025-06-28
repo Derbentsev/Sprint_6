@@ -1,13 +1,13 @@
 import pytest
 
 from pages.home_page import HomePage
-from data.test_data import DataTest
+from data.test_data import TestData
 
 
 class TestQuestions:
     @pytest.mark.parametrize(
         'question_number, answer_text',
-        DataTest.questions.items())
+        TestData.questions.items())
     def test_open_question(self, question_number, answer_text):
         home_page = HomePage()
         home_page.scroll_to_faq()
