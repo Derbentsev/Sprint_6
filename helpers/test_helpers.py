@@ -1,4 +1,5 @@
 from pages.order_page import OrderPage
+from selenium import webdriver
 
 
 class TestHelpers:
@@ -17,3 +18,9 @@ class TestHelpers:
         order_page.fill_comment(order_data['comment'])
         order_page.click_order_button()
         order_page.click_yes_order_button()        
+
+
+    def get_new_browser_page(self, web_driver: webdriver.Remote):
+        window_handles = web_driver.window_handles
+        web_driver.switch_to.window(window_handles[-1])
+        return web_driver

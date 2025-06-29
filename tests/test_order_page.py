@@ -1,4 +1,5 @@
 import pytest
+import allure
 
 from selenium import webdriver
 
@@ -11,7 +12,16 @@ from helpers.test_helpers import TestHelpers
 
 class TestOrderPage:
     @pytest.mark.parametrize('order_data', [TestData.order_data])
-    def test_order_via_header_button(self, order_data: dict[str, str], web_driver: webdriver.Remote):
+    @allure.title('Проверка корректности заказа самоката' \
+    ' через верхнюю кнопку "Заказать"')
+    @allure.description('Нажимаем на верхнюю кнопку "Заказать",' \
+    ' заполняем форму заказа')
+    def test_order_via_header_button_success(
+        self,
+        order_data: dict[str, str],
+        web_driver: webdriver.Remote
+        ):
+
         home_page = HomePage(web_driver)
         home_page.click_on_order_header_button()
 
@@ -21,7 +31,16 @@ class TestOrderPage:
 
 
     @pytest.mark.parametrize('order_data', [TestData.order_data])
-    def test_order_via_button(self, order_data: dict[str, str], web_driver: webdriver.Remote):
+    @allure.title('Проверка корректности заказа самоката' \
+    ' через кнопку "Заказать" в середине страницы')
+    @allure.description('Нажимаем на кнопку "Заказать" в середине страницы,' \
+    'заполняем форму заказа')
+    def test_order_via_button_success(
+        self,
+        order_data: dict[str, str],
+        web_driver: webdriver.Remote
+        ):
+
         home_page = HomePage(web_driver)
         home_page.click_on_order_button()
 
@@ -30,14 +49,38 @@ class TestOrderPage:
         assert order_page.wait_order_ready()
 
 
-    def test_back_to_main_page_via_scooter_logo(self, web_driver: webdriver.Remote):        
+    @allure.title('Проверка на корректный переход' \
+    ' на главную страницу при нажатии на "Самокат"')
+    @allure.description('Нажимаем текст "Самокат"' \
+    ' и ожидаем перехода на главную страницу')
+    def test_go_to_main_page_via_scooter_logo_success(
+        self,
+        web_driver: webdriver.Remote
+        ):
+
+        order_page = OrderPage(web_driver)
+        order_page.driver.get(TestData.order_page_url)
+        order_page.wait_order_page_load()
+        order_page.click_on_scooter_logo()
+
         base_page = BasePage(web_driver)
-        web_driver.get(base_page.page)
-        base_page.click_on_scooter_logo()
-        base_page.home_page_load()
+        base_page.check_current_page_is_home()
 
 
-    def test_back_to_dzen_page_via_yandex_logo(self, web_driver: webdriver.Remote):
-        base_page = BasePage(web_driver)
-        base_page.click_on_yandex_logo()
+    @allure.title('Проверка на корректный переход на сайт dzen.ru'
+    ' при нажатии на "Яндекс"')
+    @allure.description('Нажимаем текст "Яндекс"' \
+    ' и ожидаем перехода на страницу dzen.ru')
+    def test_go_to_dzen_page_via_yandex_logo_success(
+        self,
+        web_driver: webdriver.Remote
+        ):
+
+        order_page = OrderPage(web_driver)
+        order_page.driver.get(TestData.order_page_url)
+        order_page.wait_order_page_load()
+        order_page.click_on_yandex_logo()
+        
+        new_driver = TestHelpers.get_new_browser_page(web_driver)
+        base_page = BasePage(new_driver)
         base_page.check_current_page_is_dzen()
