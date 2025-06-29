@@ -3,7 +3,6 @@ import allure
 
 from pages.home_page import HomePage
 from data.data import TestData
-from locators.home_page_locators import HomePageLocators
 
 
 @allure.parent_suite('Домашняя страница')
@@ -18,8 +17,7 @@ class TestHomePage:
         'и проверяем текст ответа')
 
         home_page = HomePage(web_driver)
-        home_page.wait_page_load(HomePageLocators.faq_section)
-        home_page.scroll_to_element(HomePageLocators.faq_section)
+        home_page.scroll_to_element('faq_section')
         home_page.click_on_question(question_number)
 
         answer_text_current = home_page.get_answer_text(question_number)
