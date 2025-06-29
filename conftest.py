@@ -2,7 +2,7 @@ import pytest
 
 from selenium import webdriver
 
-from data.test_data import TestData
+from data.data import TestData
 
 
 @pytest.fixture
