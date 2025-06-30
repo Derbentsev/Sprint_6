@@ -12,24 +12,22 @@ class BasePage:
         self.driver = web_driver
 
 
-    _LOCATORS = {
-        'scooter_logo': BasePageLocators.scooter_logo,
-        'yandex_logo': BasePageLocators.yandex_logo,
-        'dzen_logo': BasePageLocators.dzen_logo
-    }
+    @allure.step('Ожидаем загрузки главной страницы')
+    def wait_main_page_completed(self):
+        return self.wait_element_displayed(BasePageLocators.wait_home_page_element)
 
 
-    @allure.step('Проверяем, что страница загрузилась')
-    def wait_element_displayed(self, locator_key: str):
+    @allure.step('Проверяем, что элемент загрузился')
+    def wait_element_displayed(self, locator):
         return WebDriverWait(self.driver, 30).until(
-            EC.visibility_of_element_located(self._LOCATORS[locator_key])
+            EC.visibility_of_element_located(locator)
         ).is_displayed()
 
 
-    @allure.step('Щелкаем на кнопку "Заказать" в шапке страницы')
-    def click_on_element(self, locator_key: str):
+    @allure.step('Щелкаем по элементу')
+    def click_on_element(self, locator):
         WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self._LOCATORS[locator_key])
+            EC.element_to_be_clickable(locator)
         ).click()
 
 
@@ -49,10 +47,25 @@ class BasePage:
 
 
     @allure.step('Скроллим до элемента')
-    def scroll_to_element(self, locator_key: str):
-        element = self.driver.find_element(*self._LOCATORS[locator_key])
+    def scroll_to_element(self, locator):
+        element = self.driver.find_element(*locator)
         self.driver.execute_script('arguments[0].scrollIntoView();', element)
         
         WebDriverWait(self.driver, 5).until(
             EC.visibility_of(element)
         )
+
+
+    @allure.step('Щелкаем по тексту "Скутер"')
+    def click_on_scooter_logo(self):
+        self.click_on_element(BasePageLocators.scooter_logo)
+
+
+    @allure.step('Щелкаем по тексту "Яндекс"')
+    def click_on_yandex_logo(self):
+        self.click_on_element(BasePageLocators.yandex_logo)
+
+
+    @allure.step('Проверяем, что страница Дзен загрузилась')
+    def wait_dzen_page_completed(self):
+        return self.wait_element_displayed(BasePageLocators.dzen_logo)

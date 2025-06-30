@@ -17,7 +17,7 @@ class TestHomePage:
         'и проверяем текст ответа')
 
         home_page = HomePage(web_driver)
-        home_page.scroll_to_element('faq_section')
+        home_page.scroll_to_faq()
         home_page.click_on_question(question_number)
 
         answer_text_current = home_page.get_answer_text(question_number)

@@ -7,7 +7,7 @@ class OrderPageLocators:
     input_address = (By.XPATH, '//input[@placeholder="* Адрес: куда привезти заказ"]')
     input_metro_station = (By.XPATH, '//input[@placeholder="* Станция метро"]')
     input_telephone = (By.XPATH, '//input[@placeholder="* Телефон: на него позвонит курьер"]')
-    next_button = (By.XPATH, '//button[text()="Далее"]')
+    next_order_button = (By.XPATH, '//button[text()="Далее"]')
 
     input_date = (By.XPATH, '//input[@placeholder="* Когда привезти самокат"]')
     input_rental_period = (By.XPATH, '//div[text()="* Срок аренды"]')    

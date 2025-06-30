@@ -24,13 +24,13 @@ class TestOrderPage:
         ):
 
         home_page = HomePage(web_driver)
-        home_page.wait_element_displayed('faq_section')
-        home_page.click_on_element('order_header_button')
+        home_page.wait_main_page_completed()
+        home_page.click_on_question_order_header_button()
 
         order_page = OrderPage(web_driver)
-        order_page.wait_element_displayed('first_name_order')
+        order_page.wait_order_page_completed()
         TestHelpers.fill_order_page(order_page, order_data)
-        assert order_page.wait_element_displayed('order_success_text')
+        assert order_page.wait_order_success()
 
 
     @pytest.mark.parametrize('order_data', [TestData.order_data])
@@ -45,13 +45,14 @@ class TestOrderPage:
         ):
 
         home_page = HomePage(web_driver)
-        home_page.wait_element_displayed('faq_section')
-        home_page.scroll_to_element('order_button')
-        home_page.click_on_element('order_button')
+        home_page.wait_main_page_completed()
+        home_page.scroll_to_order_button()
+        home_page.click_on_question_order_button()
 
         order_page = OrderPage(web_driver)
+        order_page.wait_order_page_completed()
         TestHelpers.fill_order_page(order_page, order_data)
-        assert order_page.wait_element_displayed('order_success_text')
+        assert order_page.wait_order_success()
 
 
     @allure.title('Проверка на корректный переход' \
@@ -64,9 +65,9 @@ class TestOrderPage:
         ):
 
         order_page = OrderPage(web_driver)
-        order_page.wait_order_page_load()
-        order_page.click_on_element('scooter_logo')
-        assert order_page.wait_element_displayed('faq_section')
+        order_page.wait_order_page_completed()
+        order_page.click_on_scooter_logo()
+        assert order_page.wait_main_page_completed()
 
 
     @allure.title('Проверка на корректный переход на сайт dzen.ru'
@@ -79,9 +80,9 @@ class TestOrderPage:
         ):
 
         order_page = OrderPage(web_driver)
-        order_page.wait_order_page_load()
-        order_page.click_on_element('yandex_logo')
+        order_page.wait_order_page_completed()
+        order_page.click_on_yandex_logo()
         
         new_driver = TestHelpers.get_new_browser_page(web_driver)
         base_page = BasePage(new_driver)
-        assert base_page.wait_element_displayed('dzen_logo')
+        assert base_page.wait_dzen_page_completed()
